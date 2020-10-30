@@ -23,9 +23,8 @@ class Register extends React.Component<MyProps, MyState> {
 
     render() {
 
-        const login = () => {
-            Api.post("/auth", {mail: $('#email').val(),password: $('#password').val()}).then((response) => {
-                console.log(response)
+        const Register = () => {
+            Api.post("/users", {mail: $('#email').val(),password: $('#password').val()}).then((response) => {
                 if(response.data?.user[0]){
                     localStorage.setItem("user", JSON.stringify({email: response.data?.user[0].mail, username: response.data?.user[0].user}))
                     console.log(localStorage.getItem("user"))
@@ -45,22 +44,29 @@ class Register extends React.Component<MyProps, MyState> {
                             </button>
                         </div>
                         <div className="mb-4">
+                            <label className="block text-orange-700 text-sm font-bold mb-2" htmlFor="user">
+                                User
+                        </label>
+                            <input className="shadow border rounded w-full py-2 px-3 text-gray-800" id="user" type="user" placeholder="User" />
+                            {/* <p className="text-red-400 text-xs italic">Please choose a password.</p> */}
+                        </div>
+                        <div className="mb-4">
                             <label className="block text-orange-700 text-sm font-bold mb-2" htmlFor="email">
                                 Email
                         </label>
-                            <input className="shadow border rounded w-full py-2 px-3 text-gray-800" id="email" type="email" placeholder="email" />
+                            <input className="shadow border rounded w-full py-2 px-3 text-gray-800" id="email" type="email" placeholder="Email" />
                             {/* <p className="text-red-400 text-xs italic">Please choose a password.</p> */}
                         </div>
                         <div className="mb-6">
                             <label className="block text-orange-700 text-sm font-bold mb-2" htmlFor="password">
                                 Password
                         </label>
-                            <input className="shadow border rounded w-full py-2 px-3 text-gray-800 mb-3" id="password" type="password" placeholder="******************" />
+                            <input className="shadow border rounded w-full py-2 px-3 text-gray-800 mb-3" id="password" type="password" placeholder="Password" />
                             {/* <p className="text-red-400 text-xs italic">Please choose a password.</p> */}
                         </div>
                         <div className="flex items-center justify-between">
-                            <button onClick={() => login()} className="bg-orange-600 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded" type="button">
-                                Sign In
+                            <button onClick={() => Register()} className="bg-orange-600 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded" type="button">
+                                Register
                             </button>
                         </div>
                     </div>
