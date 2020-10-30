@@ -9,8 +9,8 @@ const cookieJar = new tough.CookieJar();
 
 
 const api = axios.create({
-    // baseURL: "https://torchimage-backend.vercel.app/",
-    baseURL: "http://localhost:3333/",
+    baseURL: "https://torchimage-backend.vercel.app/",
+    // baseURL: "http://localhost:3333/",
         jar: cookieJar,
         withCredentials: true
    });
