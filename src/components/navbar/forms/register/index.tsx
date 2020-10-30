@@ -9,7 +9,8 @@ interface MyProps {
 }
 
 interface MyState {
-    close: (sl :boolean, sr: boolean) => any
+    close: (sl :boolean, sr: boolean) => any,
+    inputVerify: {user: boolean | undefined, email: boolean | undefined}
 }
 
 class Register extends React.Component<MyProps, MyState> {
@@ -17,7 +18,8 @@ class Register extends React.Component<MyProps, MyState> {
     constructor(props: any) {
         super(props);
         this.state = {
-            close: props.close
+            close: props.close,
+            inputVerify: {user: undefined, email: undefined}
         }
     }
 
@@ -27,8 +29,9 @@ class Register extends React.Component<MyProps, MyState> {
             Api.post("/users", {mail: $('#email').val(),user: $('#user').val(),password: $('#password').val()}).then((response) => {
                 if(response.data?.user[0]){
                     localStorage.setItem("user", JSON.stringify({email: response.data?.user[0].mail, username: response.data?.user[0].user}))
-                    console.log(localStorage.getItem("user"))
                     document.location.reload(true)
+                } else{
+                    this.setState({...this.state, inputVerify: response.data?.verify })
                 }
             })
         }
@@ -48,21 +51,21 @@ class Register extends React.Component<MyProps, MyState> {
                                 User
                         </label>
                             <input className="shadow border rounded w-full py-2 px-3 text-gray-800" id="user" type="user" placeholder="User" />
-                            {/* <p className="text-red-400 text-xs italic">Please choose a password.</p> */}
+                            <p className="text-red-400 text-xs italic">{(this.state.inputVerify.user === undefined)?(this.state.inputVerify.user === false)?"Please choose a password.":"":""}</p>
                         </div>
                         <div className="mb-4">
                             <label className="block text-orange-700 text-sm font-bold mb-2" htmlFor="email">
                                 Email
                         </label>
                             <input className="shadow border rounded w-full py-2 px-3 text-gray-800" id="email" type="email" placeholder="Email" />
-                            {/* <p className="text-red-400 text-xs italic">Please choose a password.</p> */}
+                            <p className="text-red-400 text-xs italic">{(this.state.inputVerify.email === undefined)?(this.state.inputVerify.email === false)?"Please choose a password.":"":""}</p>
                         </div>
                         <div className="mb-6">
                             <label className="block text-orange-700 text-sm font-bold mb-2" htmlFor="password">
                                 Password
                         </label>
                             <input className="shadow border rounded w-full py-2 px-3 text-gray-800 mb-3" id="password" type="password" placeholder="Password" />
-                            {/* <p className="text-red-400 text-xs italic">Please choose a password.</p> */}
+                            <p className="text-red-400 text-xs italic">{"Please choose a password."}</p>
                         </div>
                         <div className="flex items-center justify-between">
                             <button onClick={() => Register()} className="bg-orange-600 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded" type="button">
