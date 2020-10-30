@@ -29,7 +29,7 @@ class Register extends React.Component<MyProps, MyState> {
                 if(response.data?.user[0]){
                     localStorage.setItem("user", JSON.stringify({email: response.data?.user[0].mail, username: response.data?.user[0].user}))
                     console.log(localStorage.getItem("user"))
-                    // document.location.reload(true)
+                    document.location.reload(true)
                 }
             })
         }
