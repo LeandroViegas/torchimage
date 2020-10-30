@@ -154,7 +154,7 @@ class Navbar extends React.Component<MyProps, MyState> {
 
                     <div className="menu menu-down hidden w-full lg:block md:block flex-grow lg:flex lg:items-center lg:w-auto lg:px-3 px-8">
                         <div className="relative mx-auto text-gray-600 lg:block hidden">
-                            <form action={"search?q="+($("[name=search]").val())}>
+                            <form action={"?q="+($("[name=search]").val())}>
                                 <input
                                     className="border-2 border-gray-300 bg-white h-10 pl-2 pr-8 rounded-lg text-sm focus:outline-none"
                                     type="search" defaultValue={getParameterByName("q") || ""} name="q" placeholder="Search" />
