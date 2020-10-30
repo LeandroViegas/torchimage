@@ -24,7 +24,7 @@ class Register extends React.Component<MyProps, MyState> {
     render() {
 
         const Register = () => {
-            Api.post("/users", {mail: $('#email').val(),password: $('#password').val()}).then((response) => {
+            Api.post("/users", {mail: $('#email').val(),user: $('#user').val(),password: $('#password').val()}).then((response) => {
                 if(response.data?.user[0]){
                     localStorage.setItem("user", JSON.stringify({email: response.data?.user[0].mail, username: response.data?.user[0].user}))
                     console.log(localStorage.getItem("user"))
