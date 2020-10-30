@@ -63,7 +63,7 @@ class Navbar extends React.Component<MyProps, MyState> {
                 } else {
                     Api.get("/auth/logout")
                     localStorage.removeItem("user")
-                    document.location.reload(true)
+                    // document.location.reload(true)
                 }
             })
     }
@@ -112,7 +112,7 @@ class Navbar extends React.Component<MyProps, MyState> {
         const logout = async () => {
             localStorage.removeItem("user")
             await Api.get("/auth/logout")
-            document.location.reload(true)
+            // document.location.reload(true)
         }
 
         const search = () => {

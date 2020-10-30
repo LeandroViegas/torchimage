@@ -12,7 +12,6 @@ const Home = (props: any) => {
 
     useEffect(() => {
         api.get(`/collection?collection=${params.collection}&user=${params.user}`).then((response) => {
-            console.log(response.data)
             setPosts(response.data.result)
         }) 
     }, [params])
