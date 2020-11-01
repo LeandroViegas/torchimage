@@ -25,8 +25,8 @@ class Login extends React.Component<MyProps, MyState> {
 
         const login = () => {
             Api.post("/auth", {mail: $('#email').val(),password: $('#password').val()}).then((response) => {
-                if(response.data?.user[0]){
-                    localStorage.setItem("user", JSON.stringify({email: response.data?.user[0].mail, username: response.data?.user[0].user}))
+                if(response.data?.user){
+                    localStorage.setItem("user", JSON.stringify({email: response.data?.user.mail, username: response.data?.user.user}))
                     document.location.reload(true)
                 }
             })

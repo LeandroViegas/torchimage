@@ -136,15 +136,15 @@ class Navbar extends React.Component<MyProps, MyState> {
                 }
 
                 <nav
-                    className="flex items-center justify-between flex-wrap bg-white py-4 lg:px-12 shadow border-solid border-t-2 border-orange-700">
+                    className="flex items-center justify-between flex-wrap bg-orange-600 py-4 lg:px-12 shadow border-solid border-t-2 border-blue-500">
                     <div className="menu-up flex justify-between lg:w-auto w-full lg:border-b-0 pl-6 pr-2 border-solid border-gray-300 lg:pb-0">
-                        <div className="flex items-center flex-shrink-0 text-orange-800 mr-16">
+                        <div className="flex items-center flex-shrink-0 text-white mr-16">
                             <span className="font-bold text-xl tracking-tight"><a href="/">Torch Image</a></span>
                         </div>
                         <div className="block lg:hidden">
                             <button
                                 id="nav" onClick={NavbarSwitch}
-                                className="flex items-center px-3 py-2 border-2 rounded text-orange-700 border-orange-700 hover:text-orange-700 hover:border-orange-700">
+                                className="flex items-center px-3 py-2 border-2 rounded text-white border-white hover:text-white hover:border-white">
                                 <svg className="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title>
                                     <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
                                 </svg>
@@ -154,7 +154,7 @@ class Navbar extends React.Component<MyProps, MyState> {
 
                     <div className="menu menu-down hidden w-full lg:block md:block flex-grow lg:flex lg:items-center lg:w-auto lg:px-3 px-8">
                         <div className="relative mx-auto text-gray-600 lg:block hidden">
-                            <form action={"?q="+($("[name=search]").val())}>
+                            <form action="/">
                                 <input
                                     className="border-2 border-gray-300 bg-white h-10 pl-2 pr-8 rounded-lg text-sm focus:outline-none"
                                     type="search" defaultValue={getParameterByName("q") || ""} name="q" placeholder="Search" />
@@ -171,16 +171,16 @@ class Navbar extends React.Component<MyProps, MyState> {
                         <div className="flex">
                             {(this.state.user?.email) ?
                                 <>
-                                    <a href={'/profile/' + this.state.user?.username} className="block text-md px-4 py-2 rounded text-orange-700 ml-2 font-bold hover:text-white mt-4 hover:bg-orange-700 lg:mt-0">{this.state.user?.username}</a>
-                                    <button onClick={() => logout()} className="block text-md px-4 ml-2 py-2 rounded text-orange-700 font-bold hover:text-white mt-4 hover:bg-orange-700 lg:mt-0">Logout</button>
+                                    <a href={'/profile/' + this.state.user?.username} className="block text-md px-4 py-2 rounded text-white ml-2 font-bold hover:text-gray-200 lg:mt-0">{this.state.user?.username}</a>
+                                    <button onClick={() => logout()} className="block text-md px-4 ml-2 py-2 rounded text-white hover:text-gray-200 font-bold lg:mt-0">Logout</button>
                                 </>
                                 :
                                 <>
-                                    <button onClick={() => formUpdate(false, true)} className="block text-md px-4 py-2 rounded text-orange-700 ml-2 font-bold hover:text-white mt-4 hover:bg-orange-700 lg:mt-0">Register</button>
-                                    <button onClick={() => formUpdate(true, false)} className="block text-md px-4 ml-2 py-2 rounded text-orange-700 font-bold hover:text-white mt-4 hover:bg-orange-700 lg:mt-0">login</button>
+                                    <button onClick={() => formUpdate(false, true)} className="block text-md px-4 py-2 rounded text-white hover:text-gray-200 ml-2 font-bold">Register</button>
+                                    <button onClick={() => formUpdate(true, false)} className="block text-md px-4 ml-2 py-2 rounded text-white hover:text-gray-200 font-bold">login</button>
                                 </>
                             }
-                            <a href="/" className="blo\ck text-md px-4 ml-2 py-2 rounded text-orange-700 font-bold hover:text-white mt-4 hover:bg-orange-700 lg:mt-0">Explorer</a>
+                            {/* <a href="/" className="block text-md px-4 ml-2 py-2 rounded text-white font-bold hover:text-gray-200 lg:mt-0">Explorer</a> */}
                         </div>
                     </div>
 

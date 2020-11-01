@@ -76,9 +76,9 @@ class Collection extends React.Component<MyProps, MyState> {
         }
 
         return (
-            <div className="fixed bg-opacity-50 flex overflow-y-auto items-center bg-black w-full h-full z-10 top-0 left-0">
-                <div className="container mx-auto">
-                    <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4  flex flex-col">
+            <div className="fixed bg-opacity-50 overflow-y-auto bg-black w-screen h-full z-40 top-0 left-0">
+                <div className="container form-center top-0 left-0 mx-auto">
+                    <div className="bg-white min-h-screen shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
                         <div>
                             <button className="float-right" onClick={() => this.state.close(false)}>
                                 <GrClose />
