@@ -12,7 +12,8 @@ const Profile = (props: any) => {
     const [user, setUser] = useState<{
         user: string,
         mail: string,
-        bio: string
+        bio: string,
+        logged: boolean
     }>()
 
     const [likes, setLikes] = useState<ImagePattern[]>()
@@ -22,7 +23,7 @@ const Profile = (props: any) => {
     useEffect(() => {
         api.get(`/users?user=${encodeURI(userName)}`).then(r => {
             let ur = r.data.user
-            setUser({ user: ur?.user, mail: ur?.mail, bio: ur?.bio })
+            setUser({ user: ur?.user, mail: ur?.mail, bio: ur?.bio, logged: r?.data?.logged || false })
             api.get(`/image/likeBy?user=${encodeURI(userName)}`).then(r1 => {
                 setLikes(r1.data.result)
             })
@@ -40,10 +41,10 @@ const Profile = (props: any) => {
                 <div className="col-span-6 md:col-span-1 flex justify-center md:justify-end items-center text-6xl px-4">
                     <div>
                         <FaUser className="mx-auto text-gray-900 bg-gray-200 h-20 w-20 flex items-center justify-center rounded-full" />
-                        {/* <div className="text-sm py-2 text-gray-800 flex items-center">
+                        <div className="text-sm py-2 text-gray-800 flex items-center">
                             <span><FaUser /></span>
                             <span>1000 Followers</span>
-                        </div> */}
+                        </div>
                     </div>
                 </div>
                 <div className="col-span-6 md:col-span-3">
@@ -54,8 +55,8 @@ const Profile = (props: any) => {
             </div>
 
             <div className="container mx-auto">
-                <button onClick={() => setAbaOppened(0)} className={(abaOppened === 0 ? "bg-gray-400" : "bg-gray-300") + " p-3"}>Likes</button>
-                <button onClick={() => setAbaOppened(1)} className={(abaOppened === 1 ? "bg-gray-400" : "bg-gray-300") + " p-3"}>Collections</button>
+                <button onClick={() => setAbaOppened(0)} className={(abaOppened === 0 ? "bg-orange-600" : "bg-orange-500") + " text-white p-3"}>Likes</button>
+                <button onClick={() => setAbaOppened(1)} className={(abaOppened === 1 ? "bg-orange-600" : "bg-orange-500") + " text-white p-3"}>Collections</button>
             </div>
             { abaOppened === 0 ?
                 <div className="container mx-auto">
@@ -69,7 +70,7 @@ const Profile = (props: any) => {
                 <div className="container mx-auto">
                     <div className="grid grid-cols-3">
                         {collections?.map((collection) => {
-                            return <Collection user={String(user?.user)} name={collection?.name} key={collection?.name} />
+                            return <Collection logged={user?.logged || false} user={String(user?.user)} name={collection?.name} key={collection?.name} />
                         })}
                     </div>
                 </div> : ""}

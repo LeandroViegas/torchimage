@@ -74,7 +74,7 @@ class Card extends React.Component<MyProps, MyState> {
                 <div className="card my-1 shadow-sm">
                     <div>
                         <img className="imagens w-full" src={this.state.thumb} alt={this.state.platform + " image by " + this.state.user} />
-                        <div className="border border-t-0 bg-gray-100 text-orange-900">
+                        <div className="border border-t-0 bg-orange-600 text-gray-100">
                             <div className="float-right">
                                 <a className="inline-flex pr-2" href={this.state.userImageUrl} target="_blank" rel="noopener noreferrer">
                                     <img className="rounded-full h-6 w-6" src={this.state.userImageUrl} alt={this.state.user} />
@@ -87,7 +87,7 @@ class Card extends React.Component<MyProps, MyState> {
                                 {this.state.liked ?
                                     <span onClick={() => unlike()} className="inline-flex cursor-pointer flex items-center">
                                         <span className="pr-1">{this.state.likes}</span>
-                                        <span className="text-orange-700"><FaHeart /></span>
+                                        <span className="text-blue-400"><FaHeart /></span>
                                     </span>
                                     :
                                     <span onClick={() => like()} className="inline-flex cursor-pointer flex items-center">
