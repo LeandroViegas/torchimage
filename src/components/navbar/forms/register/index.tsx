@@ -41,7 +41,7 @@ class Register extends React.Component<MyProps, MyState> {
 
 
         return (
-            <div className="fixed bg-opacity-50 flex items-center bg-black w-full h-full z-10 top-0 left-0">
+            <div className="fixed bg-opacity-50 flex z-50 items-center bg-black w-full h-full z-10 top-0 left-0">
                 <div className="container mx-auto">
                     <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
                         <div>
