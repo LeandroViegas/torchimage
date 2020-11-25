@@ -20,16 +20,23 @@ const Profile = (props: any) => {
     const [collections, setCollections] = useState<{ name: string }[]>()
     const [abaOppened, setAbaOppened] = useState<Number>(0)
 
+    const [loadingUser, setLoadingUser] = useState(true)
+    const [loadingLikes, setLoadingLikes] = useState(true)
+    const [loadingCollections, setLoadingCollections] = useState(true)
+
     useEffect(() => {
         api.get(`/users?user=${encodeURI(userName)}`).then(r => {
             let ur = r.data.user
+            setLoadingUser(false)
             setUser({ user: ur?.user, mail: ur?.mail, bio: ur?.bio, logged: r?.data?.logged || false })
             api.get(`/image/likeBy?user=${encodeURI(userName)}`).then(r1 => {
                 setLikes(r1.data.result)
+                setLoadingLikes(false)
             })
             api.get(`/collection/list?user=${ur?.user}&image=${""}`).then(response => {
                 if (response.data?.collections)
                     setCollections(response.data?.collections)
+                setLoadingCollections(false)
             })
         })
     }, [userName])
@@ -41,16 +48,26 @@ const Profile = (props: any) => {
                 <div className="col-span-6 md:col-span-1 flex justify-center md:justify-end items-center text-6xl px-4">
                     <div>
                         <FaUser className="mx-auto text-gray-900 bg-gray-200 h-20 w-20 flex items-center justify-center rounded-full" />
-                        <div className="text-sm py-2 text-gray-800 flex items-center">
+                        {/* <div className="text-sm py-2 text-gray-800 flex items-center">
                             <span><FaUser /></span>
                             <span>1000 Followers</span>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <div className="col-span-6 md:col-span-3">
-                    <h1 className="text-gray-900 text-2xl">{user?.user}</h1>
-                    <p className="text-gray-800">{user?.mail}</p>
-                    <p className="text-gray-800">{user?.bio}</p>
+                    {!loadingUser ?
+                        <>
+                            <h1 className="text-gray-900 text-2xl">{user?.user}</h1>
+                            <p className="text-gray-800">{user?.mail}</p>
+                            <p className="text-gray-800">{user?.bio}</p>
+                        </> :
+                        <div className="h-full">
+                            <img style={{ top: "50%", transform: "translateY(-50%)" }} src="https://i.stack.imgur.com/kOnzy.gif" className="w-10 ml-6 relative" alt="loading" />
+                        </div>
+                    }
+                </div>
+                <div className="col-span-6 pt-5">
+                    <hr />
                 </div>
             </div>
 
@@ -60,19 +77,29 @@ const Profile = (props: any) => {
             </div>
             { abaOppened === 0 ?
                 <div className="container mx-auto">
-                    <div id="photos">
-                        {likes?.map((card) => {
-                            return <Card id={card.id} likes={card.likes} platform={card.platform} liked={card.liked} thumb={card.thumb} url={card.url} user={card.user} userImageUrl={card.userImageUrl} key={card.id + card.platform} />
-                        })}
-                    </div>
+                    {!loadingLikes ?
+                        <div id="photos">
+                            {likes?.map((card) => {
+                                return <Card id={card.id} likes={card.likes} platform={card.platform} liked={card.liked} thumb={card.thumb} url={card.url} user={card.user} userImageUrl={card.userImageUrl} key={card.id + card.platform} />
+                            })}
+                        </div> :
+                        <div className="mt-32">
+                            <img src="https://i.stack.imgur.com/kOnzy.gif" className="w-10 mx-auto" alt="loading" />
+                        </div>
+                    }
                 </div> : ""}
             { abaOppened === 1 ?
                 <div className="container mx-auto">
-                    <div className="grid grid-cols-3">
-                        {collections?.map((collection) => {
-                            return <Collection logged={user?.logged || false} user={String(user?.user)} name={collection?.name} key={collection?.name} />
-                        })}
-                    </div>
+                    {!loadingCollections ?
+                        <div className="grid grid-cols-3">
+                            {collections?.map((collection) => {
+                                return <Collection logged={user?.logged || false} user={String(user?.user)} name={collection?.name} key={collection?.name} />
+                            })}
+                        </div> :
+                        <div className="mt-32">
+                            <img src="https://i.stack.imgur.com/kOnzy.gif" className="w-10 mx-auto" alt="loading" />
+                        </div>
+                    }
                 </div> : ""}
         </>
     )

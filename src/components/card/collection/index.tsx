@@ -1,5 +1,6 @@
 import React from 'react'
 import { GrClose } from 'react-icons/gr'
+import { FaPlus, FaMinus } from 'react-icons/fa'
 import $ from 'jquery'
 import './index.css'
 import Api from '../../../services/api'
@@ -18,6 +19,7 @@ interface MyState {
     user: { user: string, userImageUrl: string },
     platform: { name: string },
     thumb: string,
+    createTab: boolean,
     close: (opened: boolean) => any
 }
 
@@ -29,6 +31,7 @@ class Collection extends React.Component<MyProps, MyState> {
             collections: [],
             image: props.image || "",
             user: props.user,
+            createTab: false,
             platform: props.platform,
             thumb: props.thumb,
             close: props.close
@@ -78,9 +81,9 @@ class Collection extends React.Component<MyProps, MyState> {
         return (
             <div className="fixed bg-opacity-50 overflow-y-auto bg-black w-screen h-full z-40 top-0 left-0">
                 <div className="container form-center top-0 left-0 mx-auto">
-                    <div className="bg-white min-h-screen shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
+                    <div className="bg-white min-h-screen shadow-md rounded px-8 pt-6 pb-8 flex flex-col">
                         <div>
-                            <button className="float-right" onClick={() => this.state.close(false)}>
+                            <button className="float-right p-2" onClick={() => this.state.close(false)}>
                                 <GrClose />
                             </button>
                         </div>
@@ -107,7 +110,7 @@ class Collection extends React.Component<MyProps, MyState> {
                                 </div>
                             </div>
                             <hr className="my-4 col-span-2" />
-                            <div className="col-span-1 m-1">
+                            <div className="col-span-2 md:col-span-1 m-1">
                                 <div className="bg-orange-500 w-full p-4">
                                     <h1 className="font-bold text-white">Add this image to collection</h1>
                                 </div>
@@ -124,8 +127,8 @@ class Collection extends React.Component<MyProps, MyState> {
                                 </button>
                                 </div>
                             </div>
-                            <div className="col-span-1 m-1">
-                            <div className="bg-orange-500 w-full p-4">
+                            <div className="col-span-2 md:col-span-1 m-1">
+                                <div className="bg-orange-500 w-full p-4">
                                     <h1 className="font-bold text-white">Remove this image from collection</h1>
                                 </div>
                                 <div className="border p-3 shadow-inner">
@@ -143,16 +146,34 @@ class Collection extends React.Component<MyProps, MyState> {
                             </div>
                             <hr className="my-4 col-span-2" />
                             <div className="col-span-2">
-                                <div className="py-2">
-                                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="collection-name">
-                                        Collection name:
-                                </label>
-                                    <input className="shadow border rounded w-full py-2 px-3 text-gray-800" id="collection-name" type="collection-name" placeholder="Collection name" />
+                                <div className="bg-orange-500 w-full p-4 grid grid-cols-4">
+                                    <div className="col-span-3 flex items-center">
+                                        <h1 className="font-bold text-white cursor-pointer" onClick={() => this.setState({ ...this.state, createTab: true })}>Create Collection</h1>
+                                    </div>
+                                    <div className="col-span-1 text-right mr-4">
+                                        {
+                                            this.state.createTab ?
+                                                <button onClick={() => this.setState({ ...this.state, createTab: false })} className="text-white p-2">
+                                                    <FaMinus />
+                                                </button> :
+                                                <button onClick={() => this.setState({ ...this.state, createTab: true })} className="text-white p-2">
+                                                    <FaPlus />
+                                                </button>
+                                        }
+                                    </div>
                                 </div>
-                                <button onClick={() => CreateCollection()} className="bg-orange-600 hover:bg-orange-800 text-white font-bold py-1 px-2 rounded" type="button">
-                                    Create collection
-                            </button>
+                                {
+                                    this.state.createTab ?
+                                        <div className="p-4 shadow-inner border">
+                                            <input className="shadow border rounded w-full py-2 px-3 mt-2 mb-4 text-gray-800" id="collection-name" type="collection-name" placeholder="Collection name" />
+                                            <button onClick={() => CreateCollection()} className="bg-orange-600 hover:bg-orange-800 text-white font-bold py-1 px-2 rounded" type="button">
+                                                Create collection
+                                            </button>
+                                        </div> : ""
+                                }
+
                             </div>
+
                         </div>
                     </div>
                 </div>

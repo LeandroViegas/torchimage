@@ -11,6 +11,11 @@ const Home = () => {
     const [posts, setPosts] = useState<ImagePattern[]>();
     const [collections, setCollections] = useState<{ name: string, onwer: { user: string } }[]>();
     const [users, setUsers] = useState<{ user: string }[]>();
+
+    const [loadingPosts, setLoadingPosts] = useState(true)
+    const [loadingUsers, setLoadingUsers] = useState(true)
+    const [loadingCollections, setLoadingCollections] = useState(true)
+
     const [abaOppened, setAbaOppened] = useState<number>(0);
 
 
@@ -25,15 +30,13 @@ const Home = () => {
     }
 
     const search = () => {
-        api.get(`/image/search?q=${getParameterByName("q") || ""}`).then(r => setPosts(r.data?.images || undefined))
-        api.get(`/collection/search?q=${getParameterByName("q") || ""}`).then(r => setCollections(r.data?.collections || undefined))
-        api.get(`/users/search?q=${getParameterByName("q") || ""}`).then(r => setUsers(r.data?.users || undefined))
+        api.get(`/image/search?q=${getParameterByName("q") || ""}`).then(r => { setLoadingPosts(false); setPosts(r.data?.images || undefined) })
+        api.get(`/collection/search?q=${getParameterByName("q") || ""}`).then(r => { setLoadingCollections(false); setCollections(r.data?.collections || undefined) })
+        api.get(`/users/search?q=${getParameterByName("q") || ""}`).then(r => { setLoadingUsers(false); setUsers(r.data?.users || undefined) })
     }
 
     useEffect(() => {
-        api.get(`/image/search?q=${getParameterByName("q") || ""}`).then(r => setPosts(r.data?.images || undefined))
-        api.get(`/collection/search?q=${getParameterByName("q") || ""}`).then(r => setCollections(r.data?.collections || undefined))
-        api.get(`/users/search?q=${getParameterByName("q") || ""}`).then(r => setUsers(r.data?.users || undefined))
+        search()
     }, [])
 
     return (
@@ -59,11 +62,17 @@ const Home = () => {
                         </div>
                     </div>
                     <div className="container py-4 mx-auto">
-                        <div id="photos">
-                            {posts?.map((v, i) => {
-                                return <Card id={v.id} liked={v.liked} likes={v.likes} platform={v.platform} thumb={v.thumb} url={v.url} user={v.user} userImageUrl={v.userImageUrl} key={i} />
-                            })}
-                        </div>
+                        {!loadingPosts ?
+                            <div id="photos">
+                                {posts?.map((v, i) => {
+                                    return <Card id={v.id} liked={v.liked} likes={v.likes} platform={v.platform} thumb={v.thumb} url={v.url} user={v.user} userImageUrl={v.userImageUrl} key={i} />
+                                })}
+                            </div> :
+                            <div className="my-32">
+                                <img src="https://i.stack.imgur.com/kOnzy.gif" className="w-10 mx-auto" alt="loading" />
+                            </div>
+                        }
+
                     </div>
                 </>
                 :
@@ -75,32 +84,60 @@ const Home = () => {
                     </div>
                     <div className="container mx-auto">
                         {abaOppened === 0 ?
-                            <div id="photos">
-                                {posts?.map((v, i) => {
-                                    return <Card id={v.id} liked={v.liked} likes={v.likes} platform={v.platform} thumb={v.thumb} url={v.url} user={v.user} userImageUrl={v.userImageUrl} key={i} />
-                                })}
-                            </div> : ""
+                            !loadingPosts ?
+                                (posts?.length || 0) >= 1 ?
+
+                                    <div id="photos">
+                                        {posts?.map((v, i) => {
+                                            return <Card id={v.id} liked={v.liked} likes={v.likes} platform={v.platform} thumb={v.thumb} url={v.url} user={v.user} userImageUrl={v.userImageUrl} key={i} />
+                                        })}
+                                    </div>
+                                    : <div className="my-32">
+                                        <h1 className="text-2xl text-center text-gray-700">No images found.</h1>
+                                    </div>
+                                : <div className="my-32">
+                                    <img src="https://i.stack.imgur.com/kOnzy.gif" className="w-10 mx-auto" alt="loading" />
+                                </div>
+                            : ""
                         }
                         {abaOppened === 1 ?
-                            <div className="grid grid-cols-4">
-                                {collections?.map((collection) => {
-                                    return <Collection logged={false} user={String(collection?.onwer?.user)} name={collection?.name} key={collection?.name} />
-                                })}
-                            </div> : ""
+                            !loadingCollections ?
+                                (collections?.length || 0) >= 1 ?
+                                    <div className="grid grid-cols-4">
+                                        {collections?.map((collection) => {
+                                            return <Collection logged={false} user={String(collection?.onwer?.user)} name={collection?.name} key={collection?.name} />
+                                        })}
+                                    </div>
+                                    : <div className="my-32">
+                                        <h1 className="text-2xl text-center text-gray-700">No collections found.</h1>
+                                    </div>
+                                : <div className="my-32">
+                                    <img src="https://i.stack.imgur.com/kOnzy.gif" className="w-10 mx-auto" alt="loading" />
+                                </div>
+                            : ""
                         }
                         {abaOppened === 2 ?
-                            <div className="grid grid-cols-4">
-                                {users?.map((user) => {
-                                    return <div className="col-span-1 text-center py-4">
-                                        <a href={`/profile/${user.user}`}>
-                                        <FaUser className="mx-auto text-gray-900 bg-gray-200 h-20 w-20 flex items-center justify-center rounded-full" />
-                                        <div className="text-sm py-2 text-gray-800">
-                                            {user.user}
-                                        </div>
-                                        </a>
+                            !loadingUsers ?
+                                (users?.length || 0) >= 1 ?
+                                    <div className="grid grid-cols-4 py-4">
+                                        {users?.map((user) => {
+                                            return <div className="col-span-1 text-center py-4">
+                                                <a href={`/profile/${user.user}`}>
+                                                    <FaUser className="mx-auto text-gray-900 bg-gray-200 h-20 w-20 flex items-center justify-center rounded-full" />
+                                                    <div className="text-sm py-2 text-gray-800">
+                                                        {user.user}
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        })}
                                     </div>
-                                })}
-                            </div> : ""
+                                    : <div className="my-32">
+                                        <h1 className="text-2xl text-center text-gray-700">No users found.</h1>
+                                    </div>
+                                : <div className="my-32">
+                                    <img src="https://i.stack.imgur.com/kOnzy.gif" className="w-10 mx-auto" alt="loading" />
+                                </div>
+                            : ""
                         }
                     </div>
                 </>
