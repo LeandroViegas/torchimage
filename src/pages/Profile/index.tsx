@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Navbar from '../../components/navbar'
+import { Helmet } from 'react-helmet'
 import Card, { ImagePattern } from '../../components/card'
 import Collection from '../../components/collection'
 import { FaUser } from 'react-icons/fa'
@@ -43,6 +44,9 @@ const Profile = (props: any) => {
 
     return (
         <>
+            <Helmet>
+                <title>{userName} - Torch Image</title> 
+            </Helmet>
             <Navbar />
             <div className="container grid grid-cols-6 p-4 py-6 mx-auto">
                 <div className="col-span-6 md:col-span-1 flex justify-center md:justify-end items-center text-6xl px-4">

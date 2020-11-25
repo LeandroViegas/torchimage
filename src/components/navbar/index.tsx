@@ -147,7 +147,7 @@ class Navbar extends React.Component<MyProps, MyState> {
                     className="flex items-center justify-between flex-wrap bg-orange-600 py-4 lg:px-12 shadow border-solid border-t-2 border-blue-500">
                     <div className="menu-up flex justify-between lg:w-auto w-full lg:border-b-0 pl-6 pr-2 border-solid border-gray-300 lg:pb-0">
                         <div className="flex items-center flex-shrink-0 text-white mr-16">
-                            <span className="font-bold text-xl tracking-tight"><a href="/">Torch Image</a></span>
+                            <a href="/" className="font-bold text-xl tracking-tight flex items-center"><div className="border-2 p-1 mx-2 rounded-full"><div className="w-10 h-10 bg-gray-100 p-1 rounded-full"><img src="/logo512.png" className="h-full mx-auto" /></div></div> <span>Torch Image</span></a>
                         </div>
                         <div className="block lg:hidden">
                             <button

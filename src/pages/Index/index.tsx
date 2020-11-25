@@ -3,6 +3,7 @@ import Navbar from '../../components/navbar'
 import Card from '../../components/card'
 import { ImagePattern } from '../../components/card'
 import { FaSearch, FaUser } from 'react-icons/fa'
+import { Helmet } from 'react-helmet'
 import './index.css'
 import api from '../../services/api'
 import Collection from '../../components/collection'
@@ -41,6 +42,9 @@ const Home = () => {
 
     return (
         <>
+            <Helmet>
+                <title>{getParameterByName("q") || "Home"} - Torch Image</title>
+            </Helmet>
             <Navbar search={search} />
 
             {!getParameterByName("q") ?
