@@ -2,7 +2,7 @@
 
 This project is made for the people who want the best images for their project in a accessible way.
 
-Open https://www.torchimage.now.sh with your browser to see the result.
+Open https://torchimage.now.sh with your browser to see the result.
 #
 ## Functionalities
 
