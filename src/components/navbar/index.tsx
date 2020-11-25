@@ -96,6 +96,7 @@ class Navbar extends React.Component<MyProps, MyState> {
                     showRegister: sr
                 }
             })
+            $("body").css({ "overflow-y": this.state.forms.showLogin || this.state.forms.showRegister ? "auto" : "hidden" })
         }
 
         function getParameterByName(name: string, url?: string) {
@@ -111,8 +112,8 @@ class Navbar extends React.Component<MyProps, MyState> {
 
         const logout = async () => {
             localStorage.removeItem("user")
-            await Api.get("/auth/logout")
-            document.location.reload(true)
+            await Api.delete("/auth")
+            document.location.reload()
         }
 
         const search = () => {
@@ -120,12 +121,19 @@ class Navbar extends React.Component<MyProps, MyState> {
                 pathname: '/',
                 search: `?q=${$("[name=search]").val()}`
             })
-            document.location.reload(true)
+            document.location.reload()
         }
 
 
         return (
             <>
+                {
+                    (this.state.forms.showLogin || this.state.forms.showRegister) ?
+                        <div className="fixed bg-opacity-50 bg-black w-full h-full z-40 top-0 left-0" onClick={() => formUpdate(false, false)}>
+
+                        </div>
+                        : ""
+                }
                 {(this.state.forms.showLogin) ?
                     <Login close={formUpdate} />
                     : ""
