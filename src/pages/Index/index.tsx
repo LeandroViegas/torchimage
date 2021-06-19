@@ -50,7 +50,7 @@ const Home = () => {
             {!getParameterByName("q") ?
                 <>
                     <div style={{ height: "500px" }}>
-                        <img className="absolute w-full h-64 object-cover" style={{ height: "500px" }} src="https://cdn.pixabay.com/photo/2015/12/01/20/28/fall-1072821_960_720.jpg" alt="" />
+                        <img className="absolute w-full h-64 object-cover" style={{ height: "500px" }} src="https://pixabay.com/get/g8aa80a5588a4c157ecf989415532026f26de74dac56dbf48e6cfc59172c31ea1ee5407af1ccd2675ab1c22ae34f0d166_640.jpg" alt="" />
                         <div className="bg-black bg-opacity-50 w-full absolute" style={{ height: "500px" }}>
                         </div>
                         <div className="flex items-center justify-center w-full h-full">
